@@ -43,7 +43,7 @@ export const generateJournalisticImage = async (prompt: string) => {
         },
       });
 
-      const part = response.candidates?.[0]?.content?.parts.find(p => p.inlineData);
+      const part = response.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
       if (part?.inlineData) {
         return `data:image/png;base64,${part.inlineData.data}`;
       }

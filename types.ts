@@ -9,9 +9,10 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'user';
-  status: 'active' | 'inactive';
-  lastActive: string;
+  role: 'admin' | 'user' | 'Editor-in-Chief' | 'Sr. Correspondent' | 'Staff Writer' | 'Specialist' | 'Contributor';
+  status: 'active' | 'inactive' | 'Online' | 'Offline' | 'Away';
+  lastActive?: string;
+  avatar?: string;
 }
 
 export interface SystemMetric {

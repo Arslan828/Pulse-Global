@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { AppView, Notification } from './types';
+import { AppView, Notification, User } from './types';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import UserDashboard from './components/UserDashboard';
@@ -12,7 +12,7 @@ import NotificationPanel from './components/NotificationPanel';
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>(AppView.NEWS_APP);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [notifOpen, setNotifOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   
@@ -22,13 +22,13 @@ const App: React.FC = () => {
     { id: '3', title: 'Network Alert', message: 'London bureau connection restored. Field reports incoming.', time: '3h ago', type: 'alert', read: true },
   ]);
 
-  const handleLogin = (userData: any) => {
+  const handleLogin = (userData: User) => {
     setUser(userData);
     setShowLogin(false);
   };
 
-  const handleUpdateUser = (updates: any) => {
-    setUser(prev => prev ? { ...prev, ...updates } : null);
+  const handleUpdateUser = (updates: Partial<User>) => {
+    setUser((prev: User | null) => prev ? { ...prev, ...updates } : null);
   };
 
   const navigateToView = (view: AppView) => {
