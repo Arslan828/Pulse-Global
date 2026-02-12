@@ -10,7 +10,7 @@ import {
   Bookmark,
   History,
   PenTool,
-  Trophy
+  Lock
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -18,13 +18,14 @@ interface SidebarProps {
   setView: (view: AppView) => void;
   isOpen: boolean;
   toggle: () => void;
+  isLoggedIn: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, toggle }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, toggle, isLoggedIn }) => {
   const navItems = [
-    { id: AppView.NEWS_APP, label: 'Global Feed', icon: Globe },
-    { id: AppView.USER_DASHBOARD, label: 'Daily Briefing', icon: Radio },
-    { id: AppView.ADMIN_PORTAL, label: 'Editorial Desk', icon: ShieldCheck },
+    { id: AppView.NEWS_APP, label: 'Global Feed', icon: Globe, protected: false },
+    { id: AppView.USER_DASHBOARD, label: 'Daily Briefing', icon: Radio, protected: true },
+    { id: AppView.ADMIN_PORTAL, label: 'Editorial Desk', icon: ShieldCheck, protected: true },
   ];
 
   return (
@@ -46,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, toggle 
           <button
             key={item.id}
             onClick={() => setView(item.id)}
-            className={`w-full flex items-center p-3 rounded-xl transition-all ${
+            className={`w-full flex items-center p-3 rounded-xl transition-all relative group ${
               currentView === item.id 
                 ? 'bg-rose-600 text-white shadow-lg shadow-rose-600/20' 
                 : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
@@ -54,6 +55,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, toggle 
           >
             <item.icon size={20} className={isOpen ? 'mr-3' : 'mx-auto'} />
             {isOpen && <span className="font-medium text-sm">{item.label}</span>}
+            {item.protected && !isLoggedIn && (
+               <div className={`absolute ${isOpen ? 'right-3' : 'top-1 right-1'} text-slate-500`}>
+                 <Lock size={12} />
+               </div>
+            )}
           </button>
         ))}
 
@@ -61,15 +67,24 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, toggle 
           <p className={`text-[10px] uppercase font-bold text-slate-500 mb-2 px-4 ${!isOpen && 'hidden'}`}>
             My Pulse
           </p>
-          <button className="w-full flex items-center p-3 text-slate-400 hover:bg-slate-800/50 hover:text-white rounded-xl transition-all">
+          <button 
+            disabled={!isLoggedIn}
+            className={`w-full flex items-center p-3 rounded-xl transition-all ${isLoggedIn ? 'text-slate-400 hover:bg-slate-800/50 hover:text-white' : 'text-slate-700 cursor-not-allowed opacity-50'}`}
+          >
             <Bookmark size={20} className={isOpen ? 'mr-3' : 'mx-auto'} />
             {isOpen && <span className="text-sm font-medium">Saved Reports</span>}
           </button>
-          <button className="w-full flex items-center p-3 text-slate-400 hover:bg-slate-800/50 hover:text-white rounded-xl transition-all">
+          <button 
+            disabled={!isLoggedIn}
+            className={`w-full flex items-center p-3 rounded-xl transition-all ${isLoggedIn ? 'text-slate-400 hover:bg-slate-800/50 hover:text-white' : 'text-slate-700 cursor-not-allowed opacity-50'}`}
+          >
             <History size={20} className={isOpen ? 'mr-3' : 'mx-auto'} />
             {isOpen && <span className="text-sm font-medium">Reading History</span>}
           </button>
-          <button className="w-full flex items-center p-3 text-slate-400 hover:bg-slate-800/50 hover:text-white rounded-xl transition-all">
+          <button 
+            disabled={!isLoggedIn}
+            className={`w-full flex items-center p-3 rounded-xl transition-all ${isLoggedIn ? 'text-slate-400 hover:bg-slate-800/50 hover:text-white' : 'text-slate-700 cursor-not-allowed opacity-50'}`}
+          >
             <PenTool size={20} className={isOpen ? 'mr-3' : 'mx-auto'} />
             {isOpen && <span className="text-sm font-medium">Editorial Tools</span>}
           </button>

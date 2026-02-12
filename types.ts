@@ -21,19 +21,20 @@ export interface SystemMetric {
   trend: 'up' | 'down' | 'neutral';
 }
 
-export interface ContentItem {
-  id: string;
-  title: string;
-  author: string;
-  category: string;
-  status: 'published' | 'draft' | 'scheduled';
-  createdAt: string;
-}
-
 export interface NewsArticle {
   title: string;
   summary: string;
   source: string;
   url: string;
   category: string;
+  imageUrl?: string;
+}
+
+export interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  time: string;
+  type: 'breaking' | 'alert' | 'update';
+  read: boolean;
 }

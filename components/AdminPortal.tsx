@@ -18,7 +18,8 @@ import {
   Network,
   PenTool
 } from 'lucide-react';
-import { getSystemInsights } from '../services/geminiService';
+// Correct the import from getSystemInsights to getEditorialPerformanceInsights
+import { getEditorialPerformanceInsights } from '../services/geminiService';
 
 const NewsroomAdmin: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -27,8 +28,8 @@ const NewsroomAdmin: React.FC = () => {
   const fetchEditorialInsights = async () => {
     setLoading(true);
     try {
-      // Internal logic still uses Gemini, but UI reflects a humanized Editorial approach
-      const data = await getSystemInsights({
+      // Use getEditorialPerformanceInsights instead of the undefined getSystemInsights
+      const data = await getEditorialPerformanceInsights({
         activeEditors: 12,
         serverUptime: '99.99%',
         apiCrawlRate: '4,200/hr',
@@ -108,10 +109,11 @@ const NewsroomAdmin: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {[
-                  { name: 'Sarah Miller', email: 'sarah@pulse.global', desk: 'Geopolitics', role: 'Sr. Editor', status: 'Online' },
+                  { name: 'Muhammad Arslan', email: 'arslan@pulse.global', desk: 'Editorial Board', role: 'Editor-in-Chief', status: 'Online' },
+                  { name: 'Fatima Zahra', email: 'fatima@pulse.global', desk: 'Geopolitics', role: 'Sr. Correspondent', status: 'Online' },
                   { name: 'Marcus Kane', email: 'marcus@pulse.global', desk: 'Finance', role: 'Staff Writer', status: 'Offline' },
-                  { name: 'Elena Rossi', email: 'elena@pulse.global', desk: 'Technology', role: 'Specialist', status: 'Online' },
-                  { name: 'James Wilson', email: 'james@pulse.global', desk: 'Sports Desk', role: 'Lead Reporter', status: 'Away' },
+                  { name: 'Omar Farooq', email: 'omar@pulse.global', desk: 'Technology', role: 'Specialist', status: 'Online' },
+                  { name: 'Elena Rossi', email: 'elena@pulse.global', desk: 'Culture', role: 'Contributor', status: 'Away' },
                 ].map((user, idx) => (
                   <tr key={idx} className="hover:bg-slate-50 transition-colors">
                     <td className="px-8 py-6">
