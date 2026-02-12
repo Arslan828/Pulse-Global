@@ -1,0 +1,8 @@
+{
+  "name": "Pulse Global - The World's Record",
+  "description": "Premium global reporting and editorial insights from the world's most trusted desks.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
