@@ -10,7 +10,8 @@ import {
   Bookmark,
   History,
   PenTool,
-  Lock
+  Lock,
+  Mic
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -19,9 +20,10 @@ interface SidebarProps {
   isOpen: boolean;
   toggle: () => void;
   isLoggedIn: boolean;
+  onOpenAssistant?: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, toggle, isLoggedIn }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, toggle, isLoggedIn, onOpenAssistant }) => {
   const navItems = [
     { id: AppView.NEWS_APP, label: 'Global Feed', icon: Globe, protected: false },
     { id: AppView.USER_DASHBOARD, label: 'Daily Briefing', icon: Radio, protected: true },
@@ -65,6 +67,17 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, toggle,
 
         <div className="pt-6 mt-6 border-t border-slate-800/50">
           <p className={`text-[10px] uppercase font-bold text-slate-500 mb-2 px-4 ${!isOpen && 'hidden'}`}>
+            Intelligence
+          </p>
+          <button 
+            onClick={onOpenAssistant}
+            className="w-full flex items-center p-3 rounded-xl transition-all text-rose-400 hover:bg-rose-600/10 hover:text-rose-300"
+          >
+            <Mic size={20} className={isOpen ? 'mr-3' : 'mx-auto'} />
+            {isOpen && <span className="text-sm font-bold uppercase tracking-tighter">Voice Assistant</span>}
+          </button>
+          
+          <p className={`text-[10px] uppercase font-bold text-slate-500 mt-6 mb-2 px-4 ${!isOpen && 'hidden'}`}>
             My Pulse
           </p>
           <button 
@@ -80,13 +93,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, isOpen, toggle,
           >
             <History size={20} className={isOpen ? 'mr-3' : 'mx-auto'} />
             {isOpen && <span className="text-sm font-medium">Reading History</span>}
-          </button>
-          <button 
-            disabled={!isLoggedIn}
-            className={`w-full flex items-center p-3 rounded-xl transition-all ${isLoggedIn ? 'text-slate-400 hover:bg-slate-800/50 hover:text-white' : 'text-slate-700 cursor-not-allowed opacity-50'}`}
-          >
-            <PenTool size={20} className={isOpen ? 'mr-3' : 'mx-auto'} />
-            {isOpen && <span className="text-sm font-medium">Editorial Tools</span>}
           </button>
         </div>
       </nav>

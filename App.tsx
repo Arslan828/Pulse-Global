@@ -8,6 +8,7 @@ import AdminPortal from './components/AdminPortal';
 import NewsApp from './components/NewsApp';
 import Login from './components/Login';
 import NotificationPanel from './components/NotificationPanel';
+import LiveAssistant from './components/LiveAssistant';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>(AppView.NEWS_APP);
@@ -15,6 +16,7 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [notifOpen, setNotifOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [assistantOpen, setAssistantOpen] = useState(false);
   
   const [notifications] = useState<Notification[]>([
     { id: '1', title: 'Breaking: Tokyo Market Surge', message: 'Nikkei 225 reaches historic highs following tech sector rally.', time: '2m ago', type: 'breaking', read: false },
@@ -64,6 +66,7 @@ const App: React.FC = () => {
         isOpen={sidebarOpen}
         toggle={() => setSidebarOpen(!sidebarOpen)}
         isLoggedIn={!!user}
+        onOpenAssistant={() => setAssistantOpen(true)}
       />
 
       <div className="flex-1 flex flex-col overflow-hidden relative">
@@ -85,6 +88,12 @@ const App: React.FC = () => {
           isOpen={notifOpen} 
           onClose={() => setNotifOpen(false)} 
           notifications={notifications}
+        />
+
+        <LiveAssistant 
+          isOpen={assistantOpen} 
+          onClose={() => setAssistantOpen(false)} 
+          user={user}
         />
       </div>
     </div>
